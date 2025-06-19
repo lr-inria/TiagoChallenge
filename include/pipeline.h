@@ -1,7 +1,11 @@
+#ifndef PIPELINE_H_
+#define PIPELINE_H_
+
 /*************************************************
  * Includes
  ************************************************/
 
+#include "commands.hpp"
 #include "utils.hpp"
 
 /*************************************************
@@ -9,6 +13,19 @@
  ************************************************/
 
 #define PPLN_LAYERS_MAX (100)
+
+/*************************************************
+ * Enums
+ ************************************************/
+
+enum class PPLN_Command
+{
+  CloseGripper,
+  DropBrick,
+  GoOverDropPoint,
+  GoToReceive,
+  OpenGripper
+};
 
 /*************************************************
  * Structures
@@ -24,4 +41,9 @@ struct class PPLN_Parameters
  * Global function declarations
  ************************************************/
 
-void PPLN_v_init(PPLN_Parameters * const p_parameters);
+void PPLN_v_initialize(PPLN_Parameters * const p_parameters);
+
+void PPLN_v_runCommand(PPLN_Parameters       * const p_parameters,
+                       PPLN_Command    const         e_command);
+
+#endif // PIPELINE_H_

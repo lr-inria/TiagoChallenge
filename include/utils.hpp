@@ -1,3 +1,6 @@
+#ifndef UTILS_HPP_
+#define UTILS_HPP_
+
 /*************************************************
  * Structures
  ************************************************/
@@ -22,3 +25,5 @@ struct class State
   Position   position;
   Quaternion quaternion;
 };
+
+#ifndef // UTILS_HPP_

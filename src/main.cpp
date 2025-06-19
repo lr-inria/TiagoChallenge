@@ -44,7 +44,14 @@ int main(int argc, char** argv)
                                                                                       rclcpp::QoS(1));
 
   // Task start-up
-  PPLN_v_init(&pipelineParameters);
+  PPLN_v_initialize(&pipelineParameters);
+
+  PPLN_v_runCommand(PPLN_Command::GoToReceive);
+  PPLN_v_runCommand(PPLN_Command::OpenGripper);
+  PPLN_v_runCommand(PPLN_Command::CloseGripper);
+  PPLN_v_runCommand(PPLN_Command::GoOverDropPoint);
+  PPLN_v_runCommand(PPLN_Command::DropBrick);
+  PPLN_v_runCommand(PPLN_Command::GoOverDropPoint);
 
   // Termination
   node->GripperControl("CLOSE");
