@@ -39,8 +39,8 @@ z0 = 0; % Table height.
 
 
 
-% -------------------------------------------------------------------------
 % A.3
+% -------------------------------------------------------------------------
 % Compute array of 100 planar brick poses within robot's coordinate system, 
 % w.r.t tower base. 
 
@@ -71,41 +71,64 @@ arrayZ = [1:50]';
 arrayZ = (sort(repmat(arrayZ,[2, 1]),'ascend') * zInc) + z0;
 brickLocationArray = [arrayX, arrayY, arrayA, arrayZ];
 
+% Set brick array index to one (to identify the current target brick).
+currentBrick = 1;
 
 
 
-% -------------------------------------------------------------------------
+
 % A.4
+% -------------------------------------------------------------------------
+% Define brick hand-off location and robot's arm pose (elbow down).
+
+ 
+
+
+% A.5
+% -------------------------------------------------------------------------
 % Initialize robot state to RECEIVE.
+ 
 
 
 
+% *************************************************************************
+% GENERAL WORKFLOW
+% *************************************************************************
+
+% B.0 Start keystroke event listener.
+
+% B.1 Set loop exit condition.
+% -------------------------------------------------------------------------
+% --> Should we use a keystroke? 'q' for quit?
 
 
-% Create array index counter for brick drop locations.
 
-% Start event listener (for keystrokes).
+% B.2 While loop exit condition is not met...
+% -------------------------------------------------------------------------
+% B.21  - Set robot state to RECEIVE.
 
-% Get QR code location.
+% B.22  - Run goToReceiveState():
+% B.221 - Move end-effector to brick hand-off location and pose.
+% B.222 - Human operator holds a brick in the appropriate position and
+% location for repeatable grasping via gripper.
+% B.223 - Human enters keystroke commanding gripper to close.
+% B.225 - Set robot state to DEPOSIT.
 
-% Define target square location?
+% B.23  - Run goOverIntendedCoordinate():
+% B.231 - Robot switches to elbow-up configuration.
+% B.232 - Robot retrieves target brick-deposition location 
+targetLocation = brickLocationArray(currentBrick,:);
+% B.233 - Robot moves end-effector to [targetX, targetY, targetA, targetZ+0.1];
 
-% Define brick hand-off location and pose.
-% -> Move end-effector to brick hand-off location and pose.
-% -> Beep to ask operator to open gripper via keystroke?
-% -> Operator positions block in gripper.
-% -> Operator closes gripper via keystroke.
-% -> Switch to elbow-up configuration.
-% -> Exit
+% B.24  - Run dropBrick():
+% B.244 - Robot moves gripper down vertically onto tower with optional
+%         fine-tuning.
+% B.245 - Human enters keystroke commanding gripper to open.
+% B.246 - Update brick array index.
+currentBrick = currentBrick + 1;
+% B.247 - Robot moves gripper up vertically so as not to collide with
+%         tower.
 
-% Get end-effector location for next brick drop.
 
-% Move end-effector to brick drop location.
 
-% Drop the brick.
-
-% Increment the brick counter.
-
-% Repeat until last brick location array entry has been sourced or operator
-% hits the 'q' (for quit) key.
 
