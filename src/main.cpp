@@ -25,8 +25,7 @@
 #include <chrono>
 #include <vector>
 
-#include "pipeline.hpp"
-#include "utils.hpp"
+#include "pipeline.h"
 
 /*************************************************
  * Main pipeline

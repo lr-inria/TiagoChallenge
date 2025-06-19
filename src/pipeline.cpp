@@ -2,13 +2,15 @@
  * Defines
  ************************************************/
 
+#include "pipeline.h"
+
 #define BRICKS_PER_LAYER (2)
 
 /*************************************************
  * Local function declarations
  ************************************************/
 
-void v_generateBrickStates(State          * const a_brickStates,
+void v_generateBrickStates(State         * const a_brickStates,
                            Position const * const p_baseCenter);
 
 void v_loadBaseCenter(Position * const p_baseCenter);
@@ -19,10 +21,10 @@ void v_loadBaseCenter(Position * const p_baseCenter);
 
 void PPLN_v_init(PPLN_Parameters * const p_parameters)
 {
-  v_loadBaseCenter(&p_parameters.baseCenter);
+  v_loadBaseCenter(&p_parameters->baseCenter);
 
-  v_generateBrickStates(&p_parameters.baseCenter,
-                        &p_parameters->a_brickStates[0]);
+  v_generateBrickStates(&p_parameters->a_brickStates[0],
+    &p_parameters->baseCenter);
 }
 
 /*************************************************
