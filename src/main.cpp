@@ -46,12 +46,18 @@ int main(int argc, char** argv)
   // Task start-up
   PPLN_v_initialize(&pipelineParameters);
 
-  PPLN_v_runCommand(PPLN_Command::GoToReceive);
-  PPLN_v_runCommand(PPLN_Command::OpenGripper);
-  PPLN_v_runCommand(PPLN_Command::CloseGripper);
-  PPLN_v_runCommand(PPLN_Command::GoOverDropPoint);
-  PPLN_v_runCommand(PPLN_Command::DropBrick);
-  PPLN_v_runCommand(PPLN_Command::GoOverDropPoint);
+  // Tower building routine
+  while (pipelineParameters.i_towerProgress < pipelineParameters.i_brickQty)
+  {
+    PPLN_v_runCommand(PPLN_Command::GoToReceive);
+    PPLN_v_runCommand(PPLN_Command::OpenGripper);
+    PPLN_v_runCommand(PPLN_Command::CloseGripper);
+    PPLN_v_runCommand(PPLN_Command::GoOverDropPoint);
+    PPLN_v_runCommand(PPLN_Command::DropBrick);
+    PPLN_v_runCommand(PPLN_Command::GoOverDropPoint);
+
+    pipelineParameters.i_towerProgress++;
+  }
 
   // Termination
   node->GripperControl("CLOSE");

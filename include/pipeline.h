@@ -36,6 +36,7 @@ struct class PPLN_Parameters
   State    a_brickStates [PPLN_LAYERS_MAX] = {};
   Position baseCenter                      = {};
   int      i_brickQty                      = 0;
+  int      i_towerProgress                 = 0;
 };
 
 /*************************************************

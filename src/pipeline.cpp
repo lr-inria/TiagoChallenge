@@ -34,6 +34,8 @@ void PPLN_v_initialize(PPLN_Parameters * const p_parameters)
   v_generateBrickStates(&p_parameters->a_brickStates[0],
                         &p_parameters->i_brickQty,
                         &p_parameters->baseCenter);
+
+  p_parameters->i_towerProgress = 0;
 }
 
 void PPLN_v_runCommand(PPLN_Parameters       * const p_parameters,
