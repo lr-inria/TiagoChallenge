@@ -38,13 +38,13 @@ int main(int argc, char** argv)
   // General initialization
   rclcpp::init(argc, argv);
   auto node = std::make_shared<icr_Motionplanning_arms>();
-  node->GripperControl("OPEN");
   rclcpp::Publisher<moveit_msgs::msg::PlanningScene>::SharedPtr planning_scene_publisher_;
   planning_scene_publisher_ = node->create_publisher<moveit_msgs::msg::PlanningScene>("/planning_scene",
                                                                                       rclcpp::QoS(1));
 
   // Task start-up
-  PPLN_v_initialize(&pipelineParameters);
+  PPLN_v_initialize(&pipelineParameters,
+                    node);
 
   // Tower building routine
   while (pipelineParameters.i_towerProgress < pipelineParameters.i_brickQty)
@@ -60,7 +60,6 @@ int main(int argc, char** argv)
   }
 
   // Termination
-  node->GripperControl("CLOSE");
   rclcpp::shutdown();
   return 0;
 }

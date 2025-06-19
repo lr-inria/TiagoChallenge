@@ -8,10 +8,11 @@
  * Defines
  ************************************************/
 
-#define BRICK_HEIGHT     (1.5f)
-#define BRICK_LENGTH     (7.5f)
-#define BRICK_WIDTH      (2.5f)
-#define BRICKS_PER_LAYER (2)
+#define BRICK_HEIGHT            (1.5f)
+#define BRICK_LENGTH            (7.5f)
+#define BRICK_WIDTH             (2.5f)
+#define BRICKS_PER_LAYER        (2)
+#define INTERSTEP_SLEEPDURATION (1000.0)
 
 /*************************************************
  * Local function declarations
@@ -27,8 +28,11 @@ void v_loadBaseCenter(Position * const p_baseCenter);
  * Global function definitions
  ************************************************/
 
-void PPLN_v_initialize(PPLN_Parameters * const p_parameters)
+void PPLN_v_initialize(PPLN_Parameters                           * const p_parameters,
+                       std::make_shared<icr_Motionplanning_arms>         p_newCommandNode)
 {
+  p_parameters.p_commandNode = p_newCommandNode;
+
   v_loadBaseCenter(&p_parameters->baseCenter);
 
   v_generateBrickStates(&p_parameters->a_brickStates[0],
@@ -83,6 +87,8 @@ void PPLN_v_runCommand(PPLN_Parameters       * const p_parameters,
       break;
     }
   }
+
+  Sleep((DWORD) INTERSTEP_SLEEPDURATION);
 }
 
 /*************************************************

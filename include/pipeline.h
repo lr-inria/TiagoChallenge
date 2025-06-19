@@ -33,17 +33,19 @@ enum class PPLN_Command
 
 struct class PPLN_Parameters
 {
-  State    a_brickStates [PPLN_LAYERS_MAX] = {};
-  Position baseCenter                      = {};
-  int      i_brickQty                      = 0;
-  int      i_towerProgress                 = 0;
+  State                                     a_brickStates [PPLN_LAYERS_MAX] = {};
+  Position                                  baseCenter                      = {};
+  int                                       i_brickQty                      = 0;
+  int                                       i_towerProgress                 = 0;
+  std::make_shared<icr_Motionplanning_arms> p_commandNode                   = {};
 };
 
 /*************************************************
  * Global function declarations
  ************************************************/
 
-void PPLN_v_initialize(PPLN_Parameters * const p_parameters);
+void PPLN_v_initialize(PPLN_Parameters                           * const p_parameters,
+                       std::make_shared<icr_Motionplanning_arms>         p_newCommandNode);
 
 void PPLN_v_runCommand(PPLN_Parameters       * const p_parameters,
                        PPLN_Command    const         e_command);
