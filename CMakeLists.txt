@@ -35,31 +35,25 @@ include_directories(
 add_library(motion_planning_lib
   src/RobotTaskStatus.cpp
   src/Motionplanning_arms.cpp
-  src/pipeline.cpp 
 )
 target_include_directories(motion_planning_lib PUBLIC include)
 ament_target_dependencies(motion_planning_lib ${THIS_PACKAGE_INCLUDE_DEPENDS})
 
 # Add executable
-add_executable(tiago_challenge_exe src/main.cpp)
+add_executable(tiago_challenge_exe src/main_jenga.cpp)
 
-
-# Link libraries
+# # Link libraries
 ament_target_dependencies(tiago_challenge_exe ${THIS_PACKAGE_INCLUDE_DEPENDS})
 target_link_libraries(tiago_challenge_exe motion_planning_lib)
-# Install target
-install(TARGETS tiago_challenge_exe
-  DESTINATION lib/${PROJECT_NAME}
-)
 
-add_executable(tiago_jenga src/main_jenga.cpp)
-target_link_libraries(tiago_jenga motion_planning_lib)
-ament_target_dependencies(tiago_jenga ${THIS_PACKAGE_INCLUDE_DEPENDS})
+# add_executable(main_jenga_exe src/main_jenga.cpp)
+# target_link_libraries(main_jenga_exe motion_planning_lib) # Add other libraries if needed
 
-install(TARGETS tiago_jenga
-  DESTINATION lib/${PROJECT_NAME}
-)
 
+# # Install target
+# install(TARGETS tiago_challenge_exe
+#   DESTINATION lib/${PROJECT_NAME}
+# )
 
 # Export package
 ament_package()
