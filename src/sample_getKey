@@ -1,3 +1,4 @@
+/* Sample code in Python
 import sys, select, termios, tty
 
 def getKey():
@@ -10,3 +11,38 @@ def getKey():
 
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
     return key
+*/
+
+// Translated to c++ using online tool...may not be correct!
+
+#include <iostream>
+#include <termios.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <cstring>
+#include <sys/select.h>
+
+char getKey() {
+    struct termios oldt, newt;
+    char key = '\0';
+
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+    fd_set readfds;
+    struct timeval timeout;
+    timeout.tv_sec = 0;
+    timeout.tv_usec = 100000; // 0.1 seconds
+
+    FD_ZERO(&readfds);
+    FD_SET(STDIN_FILENO, &readfds);
+
+    if (select(STDIN_FILENO + 1, &readfds, NULL, NULL, &timeout) > 0) {
+        read(STDIN_FILENO, &key, 1);
+    }
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return key;
+}
